@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const path = require('path');
 const { add, subtract, multiply, divide, modulo, power, squareRoot } = require('../calculator');
 
@@ -94,10 +94,11 @@ describe('square root', () => {
 
 // ─── CLI integration ─────────────────────────────────────────────────────────
 describe('CLI', () => {
-  const run = (args) => execSync(`node ${CLI} ${args}`, { encoding: 'utf8' }).trim();
+  const toArgv = (args) => args.split(/\s+/).filter(Boolean);
+  const run = (args) => execFileSync('node', [CLI, ...toArgv(args)], { encoding: 'utf8' }).trim();
   const runErr = (args) => {
     try {
-      execSync(`node ${CLI} ${args}`, { encoding: 'utf8', stdio: 'pipe' });
+      execFileSync('node', [CLI, ...toArgv(args)], { encoding: 'utf8', stdio: 'pipe' });
     } catch (e) {
       return { stdout: e.stdout.trim(), stderr: e.stderr.trim(), code: e.status };
     }
