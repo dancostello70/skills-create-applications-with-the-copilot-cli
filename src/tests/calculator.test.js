@@ -90,7 +90,7 @@ describe('CLI', () => {
   });
 
   test('CLI exits with code 1 on unknown operation', () => {
-    const result = runErr('modulo 10 3');
+    const result = runErr('invalidOp 10 3');
     expect(result.code).toBe(1);
     expect(result.stderr).toMatch(/Unknown operation/);
   });
